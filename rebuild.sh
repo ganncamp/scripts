@@ -13,7 +13,8 @@ echo $out
 if [ "$out" != "Already up-to-date." ] || [ "$force" = true ]
 then
 	mvn clean install
-	exit 1
+  rc=$?
+	exit $rc
 fi
 
 exit 0

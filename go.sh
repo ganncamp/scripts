@@ -26,6 +26,12 @@ fi
 
 # run rebuild script
 /bin/bash ~/scripts/rebuild.sh
+rc=$?
+if [[ $rc != 0 ]]
+then
+  echo "Plugin build failed!"
+  exit $rc
+fi
 
 
 jar=target/${currentDir}-plugin-*SNAPSHOT.jar

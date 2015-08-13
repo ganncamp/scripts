@@ -19,7 +19,7 @@ then
 fi
 
 jar=~/workspace/sonar-rule-api/target/rule-api-*.jar
-echo $jar
+
 if [ ! -f ${jar} ]
 then
   echo "I don't see the Rule API jar. Goodbye"
