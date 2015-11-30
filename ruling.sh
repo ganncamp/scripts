@@ -1,14 +1,31 @@
 #!/bin/bash
 
-#sanity checks
+basedir=~/workspace
+targetDir=its/ruling
 currentDir=${PWD##*/}
+
+#set up env
+if [[ $currentDir = sonar-javascript ]]
+then
+  versionName="-DjavascriptVersion"
+  expected=src/test/expected
+fi
+if [[ $currentDir = sonar-java ]]
+then 
+  versionName="-DjavaVersion"
+  expected=src/test/resources/guava
+fi
+
+export ORCHESTRATOR_CONFIG_URL=file:///home/ganncamp/workspace/orchestrator.properties
+
+
+#sanity checks
 if [[ $currentDir != sonar-*  ]]
 then
   echo "Not a plugin directory. Goodbye"
   exit
 fi
 
-targetDir=its/ruling
 if [ ! -d $targetDir ]
 then
   echo "I don't see '${targetDir}'. Goodbye"
@@ -22,30 +39,23 @@ if [[ $? != 0 ]] ; then
   exit $rc
 fi
 
-#set up env
-if [[ $currentDir = sonar-javascript ]]
-then
-  rulingDir=~/workspace/javascript-test-sources
-fi
-
-export SONAR_IT_SOURCES=$rulingDir
-export ORCHESTRATOR_CONFIG_URL=file:///home/ganncamp/workspace/orchestrator.properties
 
 cd $targetDir
 
 #run ruling
-mvn clean install -Dmaven.test.redirectTestOutputToFile=false -DjavascriptVersion="DEV" -Dsonar.runtimeVersion="LATEST_RELEASE"
+mvn install -Dmaven.test.redirectTestOutputToFile=false ${versionName}="DEV" -Dsonar.runtimeVersion="LATEST_RELEASE"
+
 
 #copy new .json file
 if [[ $? != 0 ]]
 then
-  dir1=src/test/expected
-  dir2=target/actual
-  newFile=$(diff -r $dir1 $dir2 | grep "Only in" | awk '{print $4}')
-  if [[ ! -z $newFile ]] 
-  then 
-    cp ${dir2}/${newFile} ${dir1}/.
-    git add ${dir2}/${newFile}
-    echo Copied $newFile to $dir2
-  fi
+  actual=target/actual
+  newFile=$(diff -qr $expected $actual | grep "Only in" | awk '{print $4}')
+  echo $newFile
+#  if [[ ! -z $newFile ]] 
+#  then 
+#    cp ${actual}/${newFile} ${expected}/.
+#    git add ${actual}/${newFile}
+#    echo Copied $newFile to $actual
+#  fi
 fi

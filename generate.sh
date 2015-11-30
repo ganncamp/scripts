@@ -1,5 +1,8 @@
 #!/bin/bash
 
+jar=~/workspace/sonar-rule-api/target/rule-api-*.jar
+
+
 if [ $# -eq 0 ]
 then
   echo Nothing to generate. Goodbye
@@ -18,8 +21,6 @@ then
   exit
 fi
 
-jar=~/workspace/sonar-rule-api/target/rule-api-*.jar
-
 if [ ! -f ${jar} ]
 then
   echo "I don't see the Rule API jar. Goodbye"
@@ -28,9 +29,13 @@ fi
 
 java -jar $jar generate -rule $1 -language $language
 
+langDir=*-checks/src/main/resources/org/sonar/l10n/${language}/rules/${language}
 if [[ $language = java ]]
 then
-  mv ${1}.html *-checks/src/main/resources/org/sonar/l10n/${language}/rules/squid/.
-else
-  mv ${1}.html *-checks/src/main/resources/org/sonar/l10n/${language}/rules/${language}/.
+  langDir=*-checks/src/main/resources/org/sonar/l10n/${language}/rules/squid
 fi
+
+mv ${1}.html ${langDir}/.
+cd ${langDir}
+git add ${1}.html
+
