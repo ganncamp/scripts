@@ -8,6 +8,9 @@ sourceDir=sonar-application/target
 out=$(git pull origin)
 echo $out
 
+#clean
+mvn clean
+
 # build snapshot
 /bin/bash ./quick-build.sh
 
@@ -17,6 +20,12 @@ len=${#sourceDir}+11 #+11 for /sonarqube-
 ver=${ver:$len}
 len=${#ver}-4 #-4 for .zip
 ver=${ver:0:$len}
+
+if [ ! -f ${sourceDir}/sonarqube-${ver}.zip ]
+then
+  echo 
+  echo BUILD FAILED
+fi
 
 # copy, expand, delete zip
 cp ${sourceDir}/sonarqube-${ver}.zip ${superDir}/.
