@@ -14,6 +14,13 @@ mvn clean
 # build snapshot
 /bin/bash ./quick-build.sh
 
+if [ $? != 0 ]
+then
+  echo 
+  echo QUICK BUILD SCRIPT FAILED
+  exit
+fi
+
 # calculate version 
 ver=$(ls ${sourceDir}/sonarqube-*-SNAPSHOT.zip)
 len=${#sourceDir}+11 #+11 for /sonarqube-
@@ -25,6 +32,7 @@ if [ ! -f ${sourceDir}/sonarqube-${ver}.zip ]
 then
   echo 
   echo BUILD FAILED
+  exit
 fi
 
 # copy, expand, delete zip
