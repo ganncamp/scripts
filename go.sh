@@ -35,7 +35,6 @@ fi
 
 
 jar=target/${currentDir}-plugin-*SNAPSHOT.jar
-
 if [ -d "${currentDir}" ]
 then
   jar="${currentDir}/${jar}"
@@ -45,6 +44,22 @@ if [ -d "${currentDir}-plugin" ]
 then
   jar="${currentDir}-plugin/${jar}"
 fi
+
+if [ ! -e "$jar" ]
+then
+  jar=target/${currentDir}-plugin.jar
+
+  if [ -d "${currentDir}" ]
+  then
+    jar="${currentDir}/${jar}"
+  fi
+
+  if [ -d "${currentDir}-plugin" ]
+  then
+    jar="${currentDir}-plugin/${jar}"
+  fi
+fi
+
 
 echo $jar
 
