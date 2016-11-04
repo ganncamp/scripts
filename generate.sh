@@ -27,7 +27,6 @@ then
   exit
 fi
 
-java -jar $jar generate -rule $1 -language $language
 
 langDir=*-checks/src/main/resources/org/sonar/l10n/${language}/rules/${language}
 if [[ $language = java ]]
@@ -35,7 +34,8 @@ then
   langDir=*-checks/src/main/resources/org/sonar/l10n/${language}/rules/squid
 fi
 
-mv ${1}.html ${langDir}/.
+java -jar $jar generate -rule $1 -language $language -directory ${langDir}
+
 cd ${langDir}
-git add ${1}.html
+git add ${1}.*
 
