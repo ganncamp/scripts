@@ -20,7 +20,11 @@ fi
 
 if [[ $currentDir != sonar-* ]]
 then
-  echo "${currentDir} is not a plugin source directory.";
+  echo
+  echo Running downloaded SQ
+  echo
+  /bin/bash ~/scripts/runDownload.sh
+
   exit
 fi
 
@@ -35,6 +39,7 @@ fi
 
 
 jar=target/${currentDir}-plugin-*SNAPSHOT.jar
+
 if [ -d "${currentDir}" ]
 then
   jar="${currentDir}/${jar}"
@@ -44,6 +49,9 @@ if [ -d "${currentDir}-plugin" ]
 then
   jar="${currentDir}-plugin/${jar}"
 fi
+
+#resolve wildcards
+jar=$(ls $jar)
 
 if [ ! -e "$jar" ]
 then
@@ -62,6 +70,7 @@ fi
 
 
 echo $jar
+
 
 # run mvstart script
 /bin/bash ~/scripts/mvstart.sh $jar $ver

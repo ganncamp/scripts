@@ -12,7 +12,7 @@ echo $out
 mvn clean
 
 # build snapshot
-/bin/bash ./quick-build.sh
+/bin/bash ./build.sh -DskipTests
 
 if [ $? != 0 ]
 then
