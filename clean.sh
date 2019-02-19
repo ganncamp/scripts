@@ -13,7 +13,8 @@ then
   target="/home/ganncamp/sonarVersions/sonar-${ver}/"
 fi
 
-rm $target/extensions/plugins/*.jar
+#rm $target/extensions/plugins/*.jar
 rm -R $target/data/*
+rm -R $target/temp/*
 
 /bin/bash ~/scripts/reset.sh

@@ -1,18 +1,15 @@
 #!/bin/bash
 
 superDir=~/sonarVersions
-sourceDir=sonar-application/target
+sourceDir=sonar-application/build/distributions
 
 
 # update sources
 out=$(git pull origin)
 echo $out
 
-#clean
-mvn clean
-
 # build snapshot
-/bin/bash ./build.sh -DskipTests
+/bin/bash ./build.sh -x test
 
 if [ $? != 0 ]
 then
@@ -22,13 +19,14 @@ then
 fi
 
 # calculate version 
-ver=$(ls ${sourceDir}/sonarqube-*-SNAPSHOT.zip)
-len=${#sourceDir}+11 #+11 for /sonarqube-
+ver=$(ls ${sourceDir}/sonar-application-*-SNAPSHOT.zip)
+len=${#sourceDir}+19 #+19 for /sonar-application-
 ver=${ver:$len}
 len=${#ver}-4 #-4 for .zip
 ver=${ver:0:$len}
 
-if [ ! -f ${sourceDir}/sonarqube-${ver}.zip ]
+
+if [ ! -f ${sourceDir}/sonar-application-${ver}.zip ]
 then
   echo 
   echo BUILD FAILED
@@ -36,10 +34,15 @@ then
 fi
 
 # copy, expand, delete zip
-cp ${sourceDir}/sonarqube-${ver}.zip ${superDir}/.
+cp ${sourceDir}/sonar-application-${ver}.zip ${superDir}/.
 cd ${superDir}
-unzip sonarqube-${ver}.zip
-rm sonarqube-${ver}.zip
+unzip sonar-application-${ver}.zip
+rm sonar-application-${ver}.zip
+
+echo 
+echo ver: ${ver}
+echo
+
 
 # start server
 if [[ -d sonarqube-${ver} ]] 

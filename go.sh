@@ -12,7 +12,7 @@ fi
 
 currentDir=${PWD##*/}
 
-if [[ $currentDir == sonarqube ]]
+if [[ $currentDir == sonar-enterprise ]]
 then
   /bin/bash ~/scripts/platformSnapshot.sh
   exit

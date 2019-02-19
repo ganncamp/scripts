@@ -1,12 +1,34 @@
 #!/bin/bash
 
+tmp="sonar-application-"
+
 # get download name
 cd ~/Downloads
 file=( $(ls sonar-application*) )
+if [ -z "$file" ] 
+then
+  file=( $(ls sonarqube-developer*) )
+  tmp="sonarqube-developer-"
+fi
+if [ -z "$file" ] 
+then
+  file=( $(ls sonarqube-enterprise*) )
+  tmp="sonarqube-enterprise-"
+fi
+if [ -z "$file" ] 
+then
+  file=( $(ls sonarqube-datacenter*) )
+  tmp="sonarqube-datacenter-"
+fi
+if [ -z "$file" ]
+then
+  echo No downloaded version found. 
+  exit;
+fi
+
 
 # calculate version
 ver=$file
-tmp="sonar-application-"
 len=${#tmp} 
 ver=${ver:$len}
 len=${#ver}-4 #-4 for .zip
