@@ -8,10 +8,6 @@ else
 fi
 
 target="/home/ganncamp/sonarVersions/sonarqube-${ver}/"
-if [[ ! -d $target ]]
-then
-  target="/home/ganncamp/sonarVersions/sonar-${ver}/"
-fi
 
 #rm $target/extensions/plugins/*.jar
 rm -R $target/data/*

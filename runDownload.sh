@@ -10,16 +10,25 @@ then
   file=( $(ls sonarqube-developer*) )
   tmp="sonarqube-developer-"
 fi
+
 if [ -z "$file" ] 
 then
   file=( $(ls sonarqube-enterprise*) )
   tmp="sonarqube-enterprise-"
 fi
+
 if [ -z "$file" ] 
 then
   file=( $(ls sonarqube-datacenter*) )
   tmp="sonarqube-datacenter-"
 fi
+
+if [ -z "$file" ] 
+then
+  file=( $(ls sonarcloud*) )
+  tmp="sonarcloud-"
+fi
+
 if [ -z "$file" ]
 then
   echo No downloaded version found. 
