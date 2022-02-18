@@ -15,4 +15,9 @@ fi
 
 echo "target: $target"
 /bin/bash ${target}/bin/linux-x86-64/sonar.sh start
-tail -f ${target}/logs/sonar.log
+
+if test [-f  "${target}/logs/sonar.log" ]; then
+  tail -f ${target}/logs/sonar.log
+else
+  tail -f ${target}/logs/sonar.$(date +'%Y%m%d').log
+fi

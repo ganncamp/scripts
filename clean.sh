@@ -9,7 +9,7 @@ fi
 
 target="/home/ganncamp/sonarVersions/sonarqube-${ver}/"
 
-#rm $target/extensions/plugins/*.jar
+rm $target/extensions/plugins/*.jar
 rm -R $target/data/*
 rm -R $target/temp/*
 
