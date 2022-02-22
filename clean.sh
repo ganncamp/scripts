@@ -7,7 +7,7 @@ else
   ver=$1
 fi
 
-target="/home/ganncamp/sonarVersions/sonarqube-${ver}/"
+target="${HOME}/sonarVersions/sonarqube-${ver}/"
 
 rm $target/extensions/plugins/*.jar
 rm -R $target/data/*

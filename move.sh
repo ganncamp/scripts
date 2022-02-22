@@ -11,10 +11,10 @@ else
   ver=$2
 fi
 
-target0="/home/ganncamp/sonarVersions/sonarqube-${ver}/extensions"
+target0="${HOME}/sonarVersions/sonarqube-${ver}/extensions"
 if [[ ! -d $target0 ]]
 then
-  target0="/home/ganncamp/sonarVersions/sonar-${ver}/extensions"
+  target0="${HOME}/sonarVersions/sonar-${ver}/extensions"
 fi
 
 target="${target0}/downloads"

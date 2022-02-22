@@ -7,10 +7,11 @@ else
   ver=$1
 fi
 
-target="/home/ganncamp/sonarVersions/sonarqube-${ver}"
+
+target="${HOME}/sonarVersions/sonarqube-${ver}"
 if [[ ! -d $target ]]
 then
-  target="/home/ganncamp/sonarVersions/sonar-${ver}"
+  target="${HOME}/sonarVersions/sonar-${ver}"
 fi
 
 echo "target: $target"
@@ -21,3 +22,5 @@ if test [-f  "${target}/logs/sonar.log" ]; then
 else
   tail -f ${target}/logs/sonar.$(date +'%Y%m%d').log
 fi
+
+
